@@ -22,7 +22,7 @@ console.log(m.has(tom));
 m.set("aaa", 12);
 m.set(false, 222);
 
-// m.delete()
+m.delete("aaa");
 // m.clear()
 
 m.forEach((value, key) => {

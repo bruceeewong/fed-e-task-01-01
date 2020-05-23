@@ -44,7 +44,7 @@
   elements[1].onclick(); // 都是3
   elements[2].onclick(); // 都是3
 
-  // 创建闭包：即借助函数作用域拜托全局作用域的影响
+  // 创建闭包：即借助函数作用域摆脱全局作用域的影响
   var elements = [{}, {}, {}];
   for (var i = 0; i < 3; i++) {
     elements[i].onclick = (function (i) {

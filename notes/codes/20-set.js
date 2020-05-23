@@ -1,5 +1,5 @@
 // Set数据结构
-const s = new Set();
+const s = new Set([99, 100]);
 
 // add方法
 s.add(1);

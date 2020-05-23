@@ -1,7 +1,7 @@
 // class 关键字
 
-// ES6之前: 构造函数+原型模式 构造类
 (function () {
+  // ES6之前: 构造函数+原型模式 构造类
   function Person(name) {
     this.name = name;
   }
