@@ -1000,6 +1000,15 @@ console.log(map);
 所以要用 Object.getOwnProperyDescriptors 拿到属性的完整描述，再定义对象，就可复制 getter / setter 以及其他属性的定义和值
 
 ```js
+const obj = {
+  firstName: "Bruski",
+  lastName: "Wang",
+  age: 23,
+  get name() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+};
+
 // 直接复制上面的对象， getter属性会变成普通属性复制过来
 const obj2 = Object.assign({}, obj);
 obj2.firstName = "snoopy";
