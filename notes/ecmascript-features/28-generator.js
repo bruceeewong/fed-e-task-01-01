@@ -14,5 +14,5 @@ const generator = foo();
 
 console.log(generator.next());
 console.log(generator.next());
-console.log(generator.next("input"));
+console.log(generator.next("payload"));
 console.log(generator.next());

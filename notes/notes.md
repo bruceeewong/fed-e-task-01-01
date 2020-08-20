@@ -1,4 +1,4 @@
-# Part1 Module 1 - 学习笔记
+# [拉勾前端训练营] ECMAScript - 学习笔记
 
 > 作者: 王思哲 bruski
 >
@@ -136,65 +136,6 @@ elements[1].onclick(); // 1
 elements[2].onclick(); // 2
 ```
 
-<!-- 今天主要学习的是 ES2015 的特性：
-
-箭头函数
-对象字面量增强
-Object 新增方法
-Proxy 对象
-Reflect 对象
-里边有些以前没注意或看不懂的知识点：
-
-Object 新增方法
-Object.assign(target, args)：用于覆盖属性, 复制对象
-Object.is(obj1, obj2)：用于比较对象，可以区分+0, -0, NaN**(===操作符不能区分)**
-
-Proxy 对象
-以前学 ES6 搞不懂这个有什么用，看到 Vue3 使用 Proxy 来替代 Object.defineProperty 监听对象，这回算是真正地去了解它。
-
-他可以无侵入地监听对对象的操作，如 get, set, deleteProperty...
-
-无侵入是指不用改动被监听的对象，具体语法为:
-
-const obj = {name:'aaa', age: 18};
-const objProxy = new Proxy(obj, {
-get(target, property) { return target[property] },
-set(target, property, value) { target[property] = value; }
-});
-
-// 调用代理对象去操作原对象
-objProxy.name = 'bbb';
-console.log(obj); // {name:'bbb', age:18}
-相比 Object.defineProperty 只能监听属性的读写，Proxy 可以监听很多操作， 详情查看 MDN
-
-还有一点, Vue2 为了监听数组对象，重写了数组的方法；而 Proxy 可以直接监听 Array 实例的 set 方法来完成监听 push, pop 等操作.
-
-Reflect 静态类
-它是统一封装好的对对象底层操作的 API
-
-这个是以前完全漏掉的知识点, 首先他是 Proxy 对象各种方法的默认实现
-
-const objProxy = new Proxy(obj, {
-get(target, property) { return Reflect.get(target, property); } // 标准写法
-});
-其次，它是 ECMA 官方希望统一对象操作的静态类，再也不用记零零散散的知识啦：
-
-// 统一对象操作
-// in
-console.log("name" in obj);
-console.log(Reflect.has(obj, "name"));
-
-// delete
-obj.age1 = 111;
-delete obj.age1;
-obj.age1 = 111;
-Reflect.deleteProperty(obj, "age1");
-
-// keys
-console.log(Object.keys(obj));
-console.log(Reflect.ownKeys(obj));
-今天就先学到这，明天继续学剩余 Promise， class 部分，加油啦。 -->
-
 #### const 关键字
 
 必须声明时初始化
@@ -252,6 +193,7 @@ const obj = { name: "Jack", age: 18 };
 const name = "Amy";
 const { name: objName } = obj;
 console.log(name);
+console.log(objName);
 
 // 默认值
 const obj = { name: "Jack", age: 18 };
@@ -266,7 +208,7 @@ console.log(objName);
 ##### 模板字符串
 
 ```js
-// 换行符
+// 可换行
 const str1 = `hi.
 i am bruski.
 nice to meet u.
@@ -274,7 +216,7 @@ nice to meet u.
 
 console.log(str1);
 
-// 变量
+// 变量插值
 const name = "bruski";
 const str2 = `I am ${name}`;
 console.log(str2);
@@ -292,15 +234,19 @@ console.log(str3);
 - 可以实现小型模板引擎
 
 ```js
+// 在字符串模板前添加一个函数 
+console.log`hi. i am bruski.nice to meet u.`;  // => [ 'hi. i am bruski.nice to meet u.' ]
+
 const name = "bruski";
 const gender = true;
 
 function myFunc(strings, name, gender) {
+  // strings 为被变量插值分割的字符串数组
   const sex = gender ? "man" : "woman";
   return strings[0] + name + strings[1] + sex + strings[2];
 }
 const result = myFunc`hey, ${name} is a ${gender}.`;
-console.log(result);
+console.log(result);  // => hey, bruski is a man.
 ```
 
 ##### 扩展方法
@@ -489,7 +435,7 @@ const personProxy2 = new Proxy(person, {
 });
 
 delete personProxy2.age;
-console.log(person);
+console.log(person);  // delete age
 ```
 
 ```js
@@ -510,7 +456,7 @@ listProxy.push(1); // set 0 1; set length 1
 
 官方用于统一对象的操作 API
 
-内部封装了 13 个对对象的底层操作静态方法
+内部封装了 13 个对对象的底层操作静态方法 => [MDN文档](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)
 
 ```js
 // 统一对象操作
@@ -691,7 +637,7 @@ obj[true] = "value";
 obj[123] = "value";
 obj[{ a: 1 }] = "value";
 
-console.log(Object.keys(obj));
+console.log(Object.keys(obj)); // [ '123', 'true', '[object Object]' ]
 console.log(obj["[object Object]"]); // 会产生问题
 ```
 
@@ -779,7 +725,7 @@ console.log(obj.public); // 外部由于拿不到symbol的引用，所以只能s
 
 ```js
 const obj1 = {
-  [Symbol.toStringTag]: "XObject",
+  [Symbol.toStringTag]: "XObject",  // 重写toString的输出方法 [object XObject]
   [Symbol("key1")]: "symbol value",
   foo: "normal value",
 };
@@ -812,6 +758,7 @@ for (const [key, value] of map) {
   console.log(key, value);
 }
 
+// 普通object未实现Iterable接口
 const obj = { name: "bruski", age: 23 };
 // 报错，not iterable
 // for (const item of obj) {
@@ -841,6 +788,7 @@ const obj = {
 应用：迭代器模式
 
 ```js
+// 场景：共同协同开发任务清单应用
 const todos = {
   life: ["吃饭", "睡觉", "打豆豆"],
   learn: ["语文", "数学", "英语"],
@@ -862,7 +810,27 @@ const todos = {
   },
 };
 
+// 如果不用迭代器模式
+// 耦合严重，需要统一定制for of接口而无需跟另一个人的逻辑实现耦合
+// for (const item of todos.life) {
+//   console.log(item);
+// }
+// for (const item of todos.learn) {
+//   console.log(item);
+// }
+// for (const item of todos.others) {
+//   console.log(item);
+// }
+
 // 直接 for-of 统一获取
+// => foo
+// => 吃饭
+// => 睡觉
+// => 打豆豆
+// => 语文
+// => 数学
+// => 英语
+// => 喝茶
 for (const item of todos) {
   console.log(item);
 }
@@ -896,7 +864,7 @@ const generator = foo();
 
 console.log(generator.next()); // 111 {value: 100, done: false}
 console.log(generator.next()); // 222 {value: 200, done: false}
-console.log(generator.next("input")); // input 333 {value: 300, done: false}
+console.log(generator.next("payload")); // payload 333 {value: 300, done: false}
 console.log(generator.next()); // {value: undefined, done: true}
 ```
 
@@ -1038,6 +1006,9 @@ const books = {
 for (const [name, count] of Object.entries(books)) {
   const padName = name.padEnd(16, "-"); // 尾部填充中划线
   const padCount = count.toString().padStart(3, 0); // 补充前导0
+  // => html------------ 005 
+  // => css------------- 016 
+  // => javascript------ 128
   console.log(padName, padCount);
 }
 ```

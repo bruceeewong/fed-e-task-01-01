@@ -12,6 +12,6 @@
 
 (function(){
   const obj = {};
-  obj.name = "jack"; // 可以该属性(内存空间放的数据)
+  obj.name = "jack"; // 可修改该属性(内存空间放的数据)
   obj = {}; // 不可改引用(内存地址)
 })();

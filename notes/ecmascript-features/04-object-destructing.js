@@ -12,6 +12,7 @@ const obj = { name: "Jack", age: 18 };
   const name = "Amy";
   const { name: objName } = obj;
   console.log(name);
+  console.log(objName);
 })();
 
 (function () {

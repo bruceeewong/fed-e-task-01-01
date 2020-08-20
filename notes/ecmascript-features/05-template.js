@@ -1,6 +1,6 @@
 // 字符串模板
 
-// 换行符
+// 可换行
 const str1 = `hi.
 i am bruski.
 nice to meet u.
@@ -8,7 +8,7 @@ nice to meet u.
 
 console.log(str1);
 
-// 变量
+// 变量插值
 const name = "bruski";
 const str2 = `I am ${name}`;
 console.log(str2);

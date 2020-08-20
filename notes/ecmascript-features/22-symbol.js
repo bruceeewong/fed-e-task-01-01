@@ -50,7 +50,7 @@ console.log(Symbol("描述"));
 (function () {
   // 内置标识符，用于重写对象的内置方法
   const obj1 = {
-    [Symbol.toStringTag]: "XObject",
+    [Symbol.toStringTag]: "XObject",  // 重写toString的输出方法 [object XObject]
     [Symbol("key1")]: "symbol value",
     foo: "normal value",
   };
@@ -58,6 +58,11 @@ console.log(Symbol("描述"));
 })();
 
 (function () {
+  const obj1 = {
+    [Symbol.toStringTag]: "XObject",
+    [Symbol("key1")]: "symbol value",
+    foo: "normal value",
+  };
   // 获取字符传Key的方法获取不到Symbol属性Key
   for (const key in obj1) {
     console.log(key);
@@ -65,5 +70,5 @@ console.log(Symbol("描述"));
   console.log(Object.keys(obj1));
   console.log(JSON.stringify(obj1));
 
-  console.log(Object.getOwnPropertySymbols(obj));
+  console.log(Object.getOwnPropertySymbols(obj1));
 })();

@@ -46,7 +46,10 @@ const books = {
 };
 
 for (const [name, count] of Object.entries(books)) {
-  const padName = name.padEnd(16, "-"); // 尾部填充中划线
+  const padName = name.padEnd(16, "-"); // 尾部填充中划线 
   const padCount = count.toString().padStart(3, 0); // 补充前导0
-  console.log(padName, padCount);
+  // => html------------ 005 
+  // => css------------- 016 
+  // => javascript------ 128
+  console.log(padName, padCount);  
 }
