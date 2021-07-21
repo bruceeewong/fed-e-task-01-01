@@ -49,6 +49,21 @@ function handleResult(res) {
 
 handleResult(g.next());
 
+// 封装成统一的生成器解决方案
+function co(generator) {
+  function handleResult(res) {
+    if (res.done) return;
+    res.value.then(
+      (data) => handleResult(generator.next(data)),
+      (err) => generator.throw(err)
+    );
+  }
+
+  handleResult(generator.next());
+}
+
+co(main());
+
 // async 方案
 async function main1() {
   try {
